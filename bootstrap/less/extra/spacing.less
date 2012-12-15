@@ -1,0 +1,48 @@
+/**
+ * The number of spacings to generate
+ * @type {Number}
+ */
+@spacings : 10;
+
+/**
+ * The amount of pixels per spacing generated
+ * @type {Number}
+ */
+@spacingAmount : 5;
+
+.spacing( @spacing ) {
+	margin-left: (@spacing * @spacingAmount)px;
+}
+
+.spacingX (@index) when (@index > 0) {
+      (~".spacing@{index}") { .spacing(@index); }
+      .spacingX(@index - 1);
+}
+
+.spacingX (0) {}
+
+.spacingX(@spacings);
+
+/*.spacing-left {
+  margin-left: 5px;
+}
+
+.spacing-right {
+  margin-right: 5px;
+}*/
+
+/**
+ * Spacing Right
+ */
+.spacing-right( @spacing ) {
+	margin-right: (@spacing * @spacingAmount)px;
+}
+
+.spacing-rightX (@index) when (@index > 0) {
+      (~".spacing-rightg@{index}") { .spacing-right(@index); }
+      .spacing-rightX(@index - 1);
+}
+
+.spacing-rightX (0) {}
+
+.spacing-rightX(@spacings);

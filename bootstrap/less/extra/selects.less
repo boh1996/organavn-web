@@ -1,0 +1,41 @@
+@import "../../bootstrap/less/variables.less";
+@import "../../bootstrap/less/mixins.less";
+
+.bootstrap-select{
+  @width: 300px;
+  border-radius: 4px;
+  list-style-type: none;
+  margin: 0;
+  width: @width;
+  .gradientBar(#FFFFFF, #E6E6E6, #000000);
+  border: 1px solid #ccc; // Fallback for IE7-8
+  border: 1px solid @dropdownBorder;
+
+  > li{
+    line-height: 20px;
+    position: relative;
+  }
+
+  > li > a{
+    color: #000000;
+    display: block;
+    padding: 3px 20px;
+    position: relative;
+    text-decoration: none;
+  }
+
+  > li > ul {
+    margin: 2px 0 0;
+  }
+
+  > li > .icon-chevron-down{
+    position: absolute;
+    right: 5px;
+    top: 5px;
+  }
+
+  .dropdown-menu{
+    left: -1px;
+    width: @width;
+  }
+}
