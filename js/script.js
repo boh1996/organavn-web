@@ -150,7 +150,11 @@ function render () {
                     "line_type": "triple",
                     "placement": "bottom",
                     "childs": [
-                        {}
+                        {
+                            "text": "CH{sup}4{/sup}",
+                            "line_type": "triple",
+                            "placement": "bottom",
+                        }
                     ]
                 }
             ]
@@ -273,7 +277,7 @@ function lines (data) {
 
                 case "triple" :
                     var dividers = [2,3,5];
-                    for (var l = 0; l <= 2; l++) {
+                    for (var l = 0; l <= 3; l++) {
                         var y = lineY-(lineHeight/dividers[l]);
                         line({
                             "x" : lineX+(pos.width/2),
