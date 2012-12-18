@@ -104,13 +104,24 @@ function render () {
     clearCanvas();
     var data = [
         {
-            "line_type": "single/couble/triple",
-            "text": "CH{sub}1{/sub}",
+            "line_type": "single",
+            "text": "CH{sub}11{/sub}",
             "childs": [
                 {
-                    "text": "CH{sup}4{/sup}>",
-                    "line_type": "single/double/triple",
-                    "placement": "right/left/top/bottom",
+                    "text": "CH{sup}4{/sup}",
+                    "line_type": "single",
+                    "placement": "top"
+                }
+            ]
+        },
+        {
+            "line_type": "double",
+            "text": "CH{sub}9{/sub}",
+            "childs": [
+                {
+                    "text": "CH{sup}4{/sup}",
+                    "line_type": "triple",
+                    "placement": "top",
                     "childs": [
                         {}
                     ]
@@ -118,19 +129,33 @@ function render () {
             ]
         },
         {
-            "line_type": "single/couble/triple",
+            "line_type": "triple",
             "text": "CH{sub}9{/sub}",
             "childs": [
                 {
-                    "text": "CH{sup}4{/sup}>",
-                    "line_type": "single/double/triple",
-                    "placement": "right/left/top/bottom",
+                    "text": "CH{sup}4{/sup}",
+                    "line_type": "double",
+                    "placement": "bottom",
                     "childs": [
                         {}
                     ]
                 }
             ]
         },
+        {
+            "text": "CH{sub}9{/sub}",
+            "childs": [
+                {
+                    "text": "CH{sup}4{/sup}",
+                    "line_type": "triple",
+                    "placement": "bottom",
+                    "childs": [
+                        {}
+                    ]
+                }
+            ]
+        },
+
 
         /*{
             "line_type": "single/couble/triple",
@@ -169,7 +194,6 @@ function encodeText (input) {
 
             case "sup" : 
                 while (i--) {
-                    console.log(string[i]);
                     result = result + String.fromCharCode(settings.superscripts[string[i]]);
                 }
             break;
@@ -179,9 +203,12 @@ function encodeText (input) {
     return output;
 }
 
-function lines (data,parent) {
-    var propotions = calculateSize(data); // The width and height of the data to be rendered
-    var renderWidth = propotions.width; //The width of the rendered data
+function lines (data) {
+    // The width and height of the data to be rendered
+    var propotions = calculateSize(data);
+
+    //The width of the rendered data
+    var renderWidth = propotions.width;
     
     //If the canvas is to small, then calculate and scale the cordinate system
     if (renderWidth > (width-padding*2)) {
@@ -214,31 +241,197 @@ function lines (data,parent) {
         //Render the text
         context.fillText(object.text,pos.x,pos.y);
 
+        var lineY = pos.y;
+        var lineX = pos.x;
+
         //If the point isn't the last point, render the split line
-        if (i != data.length-1) {
-            var y = pos.y-(lineHeight/4);
-            context.beginPath();
-            context.moveTo(pos.x+(pos.width/2), pos.y-(lineHeight/4));
-            context.lineWidth = 2;
-            context.strokeStyle = 'black';
-            context.lineTo(pos.x+pos.width+lineWidth,y);
-            context.stroke();
+        if (i != data.length-1 && typeof object.line_type != "undefined") {
+            switch (object.line_type) {
+                case "single" :
+                    var y = lineY-(lineHeight/4);
+                    line({
+                        "x" : lineX+(pos.width/2),
+                        "y" : y
+                    },{
+                        "x" : lineX+pos.width+lineWidth,
+                        "y" : y
+                    });
+                break;
+
+                case "double" :
+                    for (var l = 0; l <= 2; l++) {
+                        var y = lineY-((lineHeight-10)/(2*l));
+                        line({
+                            "x" : lineX+(pos.width/2),
+                            "y" : y
+                        },{
+                            "x" : lineX+pos.width+lineWidth,
+                            "y" : y
+                        });
+                     }; 
+                break;
+
+                case "triple" :
+                    var dividers = [2,3,5];
+                    for (var l = 0; l <= 2; l++) {
+                        var y = lineY-(lineHeight/dividers[l]);
+                        line({
+                            "x" : lineX+(pos.width/2),
+                            "y" : y
+                        },{
+                            "x" : lineX+pos.width+lineWidth,
+                            "y" : y
+                        });
+                     }; 
+                break;
+            } 
             lastX = pos.x + pos.width + lineWidth;
         } else {
             lastX = pos.x + pos.width + lineWidth;
         }
-
-        /*if (typeof object.childs != "undefined" && object.childs.length > 0) {
-            for (var x = 0; x < object.childs.length; x++) {
-                var child = object.childs[x];
-                child.parent_id = object.id;
-                console.log(child);
-            };
-        }*/
+        renderChilds(object.childs,pos);
     };
+}
 
-    context.translate(200, 200);
+/**
+ * This function render text and lines to a parent point
+ * @param  {Array} childs The objects to render
+ * @param  {object} pos    The parent point
+ */
+function renderChilds (childs,pos) {
+    if (typeof childs != "undefined" && childs.length > 0) {
+        for (var x = 0; x <= childs.length-1; x++) {
+            var child = childs[x];
+            child.text = encodeText(child.text);
 
+            var childPos = {"x": 0, "y": 0};
+
+            childPos.x = pos.x;
+
+            switch (child.placement) {
+                case "top" : 
+                    childPos.y = pos.y - lineHeight - lineWidth;
+                    context.fillText(child.text,childPos.x,childPos.y);
+                    switch (child.line_type) {
+                        case "single" :
+                            line({
+                                "x" : childPos.x,
+                                "y" : childPos.y + (lineHeight/2),
+                            },{
+                                "x" : childPos.x,
+                                "y" : childPos.y + lineWidth
+                            });
+                        break;
+
+                        case "double" :
+                            for (var i = 0; i <= 2; i++) {
+                                if (i == 1) {
+                                    var x = childPos.x - 2;
+                                } else {
+                                    var x = childPos.x + 2;
+                                }
+                                line({
+                                    "x" : x,
+                                    "y" : childPos.y + (lineHeight/2),
+                                },{
+                                    "x" : x,
+                                    "y" : childPos.y + lineWidth
+                                });  
+                            };
+                        break;
+
+                        case "triple" :
+                            for (var i = 0; i <= 3; i++) {
+                                if (i == 1) {
+                                    var x = childPos.x - 3;
+                                } else if (i == 2) {
+                                    var x = childPos.x;
+                                } else {
+                                    var x = childPos.x + 3;
+                                }
+                                line({
+                                    "x" : x,
+                                    "y" : childPos.y + (lineHeight/2),
+                                },{
+                                    "x" : x,
+                                    "y" : childPos.y + lineWidth
+                                });  
+                            };
+                        break;
+                    }
+                break;
+
+                case "bottom" :
+                    childPos.y = pos.y + lineHeight + lineWidth;
+                    context.fillText(child.text,childPos.x,childPos.y);
+
+                    switch (child.line_type) {
+                        case "single" :
+                            line({
+                                "x" : childPos.x,
+                                "y" : childPos.y - lineHeight,
+                            },{
+                                "x" : childPos.x,
+                                "y" : childPos.y - lineWidth - (lineHeight/2)
+                            });
+                        break;
+
+                        case "double" :
+                            for (var i = 0; i <= 2; i++) {
+                                if (i == 1) {
+                                    var x = childPos.x - 2;
+                                } else {
+                                    var x = childPos.x + 2;
+                                }
+                                line({
+                                    "x" : x,
+                                    "y" : childPos.y - lineHeight,
+                                },{
+                                    "x" : x,
+                                    "y" : childPos.y - lineWidth - (lineHeight/2)
+                                });  
+                            };
+                        break;
+
+                        case "triple" :
+                            for (var i = 0; i <= 3; i++) {
+                                if (i == 1) {
+                                    var x = childPos.x - 3;
+                                } else if (i == 2) {
+                                    var x = childPos.x;
+                                } else {
+                                    var x = childPos.x + 3;
+                                }
+                                line({
+                                    "x" : x,
+                                    "y" : childPos.y - lineHeight,
+                                },{
+                                    "x" : x,
+                                    "y" : childPos.y - lineWidth - (lineHeight/2)
+                                });  
+                            };
+                        break;
+                    }
+                break;
+
+            }
+            renderChilds(child.childs,childPos);
+        };
+    }
+}
+ 
+/**
+ * This function renders a line
+ * @param  {object} start The start cordinate
+ * @param  {object} end   The end cordinate
+ */
+function line (start, end) {
+    context.beginPath();
+    context.moveTo(start.x, start.y);
+    context.lineWidth = 2;
+    context.strokeStyle = 'black';
+    context.lineTo(end.x,end.y);
+    context.stroke();
 }
 
 /**
