@@ -1,0 +1,59 @@
+var generator = {
+	lastResult : [{
+            "line_type": "single",
+            "text": "CH{sub}11{/sub}",
+            "childs": [
+                {
+                    "text": "CH{sup}4{/sup}",
+                    "line_type": "single",
+                    "placement": "top"
+                }
+            ]
+        },
+        {
+            "line_type": "double",
+            "text": "CH{sub}9{/sub}",
+            "childs": [
+                {
+                    "text": "CH{sup}4{/sup}",
+                    "line_type": "triple",
+                    "placement": "top",
+                    "childs": [
+                        {}
+                    ]
+                }
+            ]
+        },
+        {
+            "line_type": "triple",
+            "text": "CH{sub}9{/sub}",
+            "childs": [
+                {
+                    "text": "CH{sup}4{/sup}",
+                    "line_type": "double",
+                    "placement": "bottom",
+                    "childs": [
+                        {}
+                    ]
+                }
+            ]
+        },
+        {
+            "text": "CH{sub}9{/sub}",
+            "childs": [
+                {
+                    "text": "CH{sup}4{/sup}",
+                    "line_type": "triple",
+                    "placement": "bottom",
+                    "childs": [
+                        {
+                            "text": "CH{sup}4{/sup}",
+                            "line_type": "triple",
+                            "placement": "bottom",
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
