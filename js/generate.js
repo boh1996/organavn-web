@@ -1,59 +1,42 @@
 var generator = {
-	lastResult : [{
-            "line_type": "single",
-            "text": "CH{sub}11{/sub}",
-            "childs": [
-                {
-                    "text": "CH{sup}4{/sup}",
-                    "line_type": "single",
-                    "placement": "top"
-                }
-            ]
-        },
-        {
-            "line_type": "double",
-            "text": "CH{sub}9{/sub}",
-            "childs": [
-                {
-                    "text": "CH{sup}4{/sup}",
-                    "line_type": "triple",
-                    "placement": "top",
-                    "childs": [
-                        {}
-                    ]
-                }
-            ]
-        },
-        {
-            "line_type": "triple",
-            "text": "CH{sub}9{/sub}",
-            "childs": [
-                {
-                    "text": "CH{sup}4{/sup}",
-                    "line_type": "double",
-                    "placement": "bottom",
-                    "childs": [
-                        {}
-                    ]
-                }
-            ]
-        },
-        {
-            "text": "CH{sub}9{/sub}",
-            "childs": [
-                {
-                    "text": "CH{sup}4{/sup}",
-                    "line_type": "triple",
-                    "placement": "bottom",
-                    "childs": [
-                        {
-                            "text": "CH{sup}4{/sup}",
-                            "line_type": "triple",
-                            "placement": "bottom",
-                        }
-                    ]
-                }
-            ]
-        }
-    ]
+	lastResult : null,
+
+	generate : function () {
+		var availableRoots = ['meth','eth','prop','but','pent','hex','hept','oct'];
+		var availableBindings = ["an","en","yn"];
+		var availablePrefixes = ['','cyclo','benzen'];
+
+		var root = generator.randomNumber(availableRoots.length);
+
+		var element = {
+			"root" : root,
+			"bindingSuffix" : 0,
+			"prefix" : generator.randomNumber(availablePrefixes.length),
+			"alchohol" : false,
+		};
+
+		var elementObjects = [];
+
+		for (var i = 0; i <= root; i++) {
+			var binding = generator.randomNumber(availableBindings.length);
+
+			if (binding > element.bindingSuffix) {
+				element.bindingSuffix = binding;
+			}
+		};
+
+		if (generator.randomNumber(10) > 5) {
+			element.alchohol = true;
+		}
+
+		element.bindingSuffix = availableBindings[element.bindingSuffix];
+		element.root = availableRoots[element.root];
+		element.prefix = availablePrefixes[element.prefix];
+
+		console.log(element);
+	},
+
+	randomNumber : function (max) {
+		return Math.floor(Math.random() * max)
+	}
 }

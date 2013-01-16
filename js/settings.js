@@ -10,6 +10,13 @@ var settings = {
 	 * @type {Array}
 	 */
 	subNames 		: ['brom','chlor','iod','methyl', 'ethyl','propyl','isopropyl','butyl','isobutyl','sec-butyl','tert-butyl','nitro','amino','hydroxy','Ø'],
+
+	/**
+	 * The subgroup suffix
+	 * @type {String}
+	 */
+	subSuffix 		: "yn",
+
 	/**
 	 * The numbering names
 	 * @type {Array}
@@ -20,6 +27,15 @@ var settings = {
 	 * @type {Array}
 	 */
 	suffixes 		: ["an","en","yn"],
+
+	/**
+	 * The available line types
+	 * @type {Array}
+	 */
+	line_types 		: ["single","double","triple"],
+
+	alchoholSuffix 	: "ol",
+
 	/**
 	 * The structure prefixes
 	 * @type {Array}
@@ -38,5 +54,4 @@ var settings = {
 	 * @type {Array}
 	 */
 	subscripts 		: [8320,8321,8322,8323,8324,8325,8326,8327,8328,8329]
-
 }

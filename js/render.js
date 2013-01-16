@@ -27,6 +27,12 @@ var renderer = {
     width : null,
 
     /**
+     * If the canvas is activated
+     * @type {Boolean}
+     */
+    active : true,
+
+    /**
      * The pixel height of the canvas element
      * @type {Number}
      */
@@ -72,32 +78,54 @@ var renderer = {
      * so the cordinates fits the cnavas size
      */
     canvasResize : function () {
-        renderer.canvas.attr("width","");
-        renderer.canvas.attr("height","");
+        if (renderer.active == true) {
+            renderer.canvas.attr("width","");
+            renderer.canvas.attr("height","");
 
-        renderer.width = renderer.canvas.width();
-        renderer.height = renderer.canvas.height();
+            renderer.width = renderer.canvas.width();
+            renderer.height = renderer.canvas.height();
 
-        renderer.lineHeight = renderer.width/renderer.rows;
+            renderer.lineHeight = renderer.width/renderer.rows;
 
-        if (renderer.lineHeight > renderer.maxLineHeight) {
-            renderer.lineHeight = renderer.maxLineHeight;
+            if (renderer.lineHeight > renderer.maxLineHeight) {
+                renderer.lineHeight = renderer.maxLineHeight;
+            }
+
+            renderer.canvas.attr("width",renderer.width);
+            renderer.canvas.attr("height",renderer.height);
+
+            renderer.context.textAlign = 'center';
+            renderer.context.font = renderer.lineHeight+'px Calibri';
+            renderer.context.fillStyle = 'blue';
         }
-
-        renderer.canvas.attr("width",renderer.width);
-        renderer.canvas.attr("height",renderer.height);
-
-        renderer.context.textAlign = 'center';
-        renderer.context.font = renderer.lineHeight+'px Calibri';
-        renderer.context.fillStyle = 'blue';
     },
 
     /**
      * This function removes everything that has been rendered on the renderer.canvas
      */
     clearcanvas : function () {
-        i = renderer.context.createImageData(renderer.canvas.width(), renderer.canvas.height());
-        renderer.context.putImageData(i, 0, 0);
+        if (renderer.active == true) {
+            i = renderer.context.createImageData(renderer.canvas.width(), renderer.canvas.height());
+            renderer.context.putImageData(i, 0, 0);
+        }
+    },
+
+    /**
+     * This function disables the canvas and rendering pipeline
+     */
+    disable : function () {
+        renderer.active = false;
+        renderer.canvas.css("display","none");
+    },
+
+    /**
+     * This function activates the rendering process again
+     */
+    activate : function () {
+        renderer.active = true;
+        renderer.canvas.css("display","");
+        renderer.canvasResize();
+        renderer.render();
     },
 
     /**
@@ -172,9 +200,11 @@ var renderer = {
      * This function is called when the canvas should be rerendered
      */
     render : function () {
-        renderer.clearcanvas();
-        if (generator.lastResult != null) {
-            renderer.lines(generator.lastResult);
+        if (renderer.active == true) {
+            renderer.clearcanvas();
+            if (generator.lastResult != null) {
+                renderer.lines(generator.lastResult);
+            }
         }
     },
 
@@ -476,51 +506,40 @@ var renderer = {
                 renderer.renderChilds(child.childs,childPos);
             };
         }
+    },
+
+    /**
+     * This function calculates the scaling of a circle used with benzen and cyclo elements
+     * @param  {object} size             The renderer.canvas sizes
+     * @param  {object} center           The center of the cicle
+     * @param  {integer} numberOfElements The number of elements to render
+     * @return {object}                  An object containing a scale and a fontSizse
+     */
+    calculateCircleSize : function (size,center,numberOfElements) {
+
+        var scale = (size.width + size.height) * 0.16;
+
+        if ((Math.sin(6.28) * scale + center.y + (renderer.lineHeight * 2)) > size.height) {
+            scale = (size.width + (size.height - (50 + (renderer.lineHeight*2) * 8))) * 0.16;
+        }
+
+        if ((Math.cos(6.28) * scale + center.x) > size.height) {
+            scale = ((size.width - (50 + (renderer.lineHeight*2) * 8)) + size.height) * 0.16;
+        }
+
+        var fontSizeHeight = (size.height/numberOfElements > 30) ? 30 : size.height/numberOfElements;
+        var fontSizeWidth = (size.width/numberOfElements > 30) ? 30 : size.width/numberOfElements;
+        if (fontSizeWidth > fontSizeHeight) {
+            var fontSize = fontSizeHeight;
+        } else {
+            var fontSize = fontSizeWidth;
+        }
+
+        return {
+            "fontSize" : fontSize,
+            "scale" : scale
+        };
     }
-}
-
-$(document).ready(function () {
-    renderer.initialize();
-    renderer.canvasResize();
-    renderer.render();
-});
-
-$(window).resize(function () {
-    renderer.canvasResize();
-    renderer.render(); 
-});
-
-/**
- * This function calculates the scaling of a circle used with benzen and cyclo elements
- * @param  {object} size             The renderer.canvas sizes
- * @param  {object} center           The center of the cicle
- * @param  {integer} numberOfElements The number of elements to render
- * @return {object}                  An object containing a scale and a fontSizse
- */
-function calculateCircleSize (size,center,numberOfElements) {
-
-    var scale = (size.width + size.height) * 0.16;
-
-    if ((Math.sin(6.28) * scale + center.y + (lineHeight * 2)) > size.height) {
-        scale = (size.width + (size.height - (50 + (lineHeight*2) * 8))) * 0.16;
-    }
-
-    if ((Math.cos(6.28) * scale + center.x) > size.height) {
-        scale = ((size.width - (50 + (lineHeight*2) * 8)) + size.height) * 0.16;
-    }
-
-    var fontSizeHeight = (size.height/numberOfElements > 30) ? 30 : size.height/numberOfElements;
-    var fontSizeWidth = (size.width/numberOfElements > 30) ? 30 : size.width/numberOfElements;
-    if (fontSizeWidth > fontSizeHeight) {
-        var fontSize = fontSizeHeight;
-    } else {
-        var fontSize = fontSizeWidth;
-    }
-
-    return {
-        "fontSize" : fontSize,
-        "scale" : scale
-    };
 }
 
 function cyclo () {

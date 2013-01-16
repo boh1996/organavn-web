@@ -4,8 +4,44 @@
 		"selected_items":
 		[
 			[
+				"ava",
+				"availableRoots"
+			],
+			[
+				"bid",
+				"bindingSuffix"
+			],
+			[
+				"bind",
+				"bindingSuffix"
+			],
+			[
+				"bin",
+				"bindingSuffix"
+			],
+			[
+				"e",
+				"elementObjects"
+			],
+			[
+				"ran",
+				"randomNumber"
+			],
+			[
+				"canvas",
+				"canvasResize"
+			],
+			[
+				"wid",
+				"width"
+			],
+			[
 				"line",
-				"lineWidth"
+				"lineHeight"
+			],
+			[
+				"last",
+				"lastResult"
 			],
 			[
 				"chil",
@@ -26,10 +62,6 @@
 			[
 				"ch",
 				"childsReturn"
-			],
-			[
-				"last",
-				"lastRenderedElement"
 			],
 			[
 				"fon",
@@ -482,43 +514,43 @@
 			[
 				"do",
 				"doneCallback"
-			],
-			[
-				"app",
-				"application"
-			],
-			[
-				"cu",
-				"current"
-			],
-			[
-				"find",
-				"findByProperty"
-			],
-			[
-				"conf",
-				"confirmDialog"
-			],
-			[
-				"store",
-				"storedVariables"
-			],
-			[
-				"orga",
-				"organizations"
-			],
-			[
-				"req",
-				"request_url"
-			],
-			[
-				"p",
-				"platform"
 			]
 		]
 	},
 	"buffers":
 	[
+		{
+			"file": "index.html",
+			"settings":
+			{
+				"buffer_size": 1670,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "js/generate.js",
+			"settings":
+			{
+				"buffer_size": 1023,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "js/settings.js",
+			"settings":
+			{
+				"buffer_size": 1251,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "js/render.js",
+			"settings":
+			{
+				"buffer_size": 21522,
+				"line_ending": "Windows"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -580,9 +612,11 @@
 	},
 	"file_history":
 	[
-		"/R/organavn-web/index.html",
 		"/R/organavn-web/js/script.js",
+		"/R/organavn-web/js/render.js",
+		"/R/organavn-web/js/lastResult.json",
 		"/R/organavn-web/js/settings.js",
+		"/R/organavn-web/index.html",
 		"/R/organavn-web/css/style.css",
 		"/R/ComputerInfo/assets/js/tableGenerator.js",
 		"/C/Users/Bo/Downloads/ORG41/SCO_UNIT.PAS",
@@ -705,9 +739,7 @@
 		"/R/ComputerInfo/application/libraries/operating_system.php",
 		"/R/ComputerInfo/application/libraries/operating_system_edition.php",
 		"/R/ComputerInfo/application/libraries/operating_system_family.php",
-		"/R/ComputerInfo/application/controllers/login.php",
-		"/R/ComputerInfo/application/libraries/token.php",
-		"/R/ComputerInfo/assets/bootstrap/node_modules/grunt-contrib-mincss/node_modules/clean-css/node_modules/optimist/example/line_count_options.js"
+		"/R/ComputerInfo/application/controllers/login.php"
 	],
 	"find":
 	{
@@ -733,6 +765,11 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"object",
+			"integer",
+			"line(",
+			"context",
+			"canvas",
 			"firstElement",
 			"height",
 			"x",
@@ -855,19 +892,17 @@
 			"d",
 			"btn-primary",
 			"user-password",
-			"$User->",
-			"email",
-			"\"user_id\"",
-			"user-",
-			"-",
-			"email"
+			"$User->"
 		],
 		"highlight": true,
 		"in_selection": false,
 		"preserve_case": false,
-		"regex": true,
+		"regex": false,
 		"replace_history":
 		[
+			"renderer.line(",
+			"renderer.context",
+			"renderer.canvas",
 			"{/sup}",
 			"{sub}",
 			"",
@@ -978,8 +1013,130 @@
 	"groups":
 	[
 		{
+			"selected": 2,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "index.html",
+					"settings":
+					{
+						"buffer_size": 1670,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1639,
+								1639
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 276.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "js/generate.js",
+					"settings":
+					{
+						"buffer_size": 1023,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								666,
+								666
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "js/settings.js",
+					"settings":
+					{
+						"buffer_size": 1251,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								801,
+								801
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "js/render.js",
+					"settings":
+					{
+						"buffer_size": 21522,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								8724,
+								8748
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2999.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -1040,6 +1197,26 @@
 		"height": 0.0,
 		"selected_items":
 		[
+			[
+				"render",
+				"js/render.js"
+			],
+			[
+				"scr",
+				"js/script.js"
+			],
+			[
+				"set",
+				"js/settings.js"
+			],
+			[
+				"se",
+				"js/settings.js"
+			],
+			[
+				"i",
+				"index.html"
+			],
 			[
 				"ta",
 				"assets/js/tableGenerator.js"
@@ -1297,10 +1474,6 @@
 				"assets/testDump.json"
 			],
 			[
-				"set",
-				"application/config/settings.php"
-			],
-			[
 				"cominfo_s",
 				"application/libraries/computerinfo_security.php"
 			],
@@ -1535,22 +1708,6 @@
 			[
 				"sett.js",
 				"assets/js/settings.js"
-			],
-			[
-				"model",
-				"application/views/models_view.php"
-			],
-			[
-				"std_",
-				"application/libraries/std_library.php"
-			],
-			[
-				"co/s",
-				"application/config/settings.php"
-			],
-			[
-				"comput.ph",
-				"application/libraries/computer.php"
 			]
 		],
 		"width": 0.0
